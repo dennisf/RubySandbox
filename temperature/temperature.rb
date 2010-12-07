@@ -10,16 +10,14 @@ abort "#{temp} is not a valid number." if temp !~ /-?\d+/
 
 temp = temp.to_f
 case scale
-  when "C","c"
-     f = 1.8*temp + 32
-  when "F","f"
-     c = (5.0/9.0)*(temp-32)
+when "C","c"
+  f = 1.8*temp + 32
+  print "#{f} degrees F\n"
+when "F","f"
+  c = (5.0/9.0)*(temp-32)
+  print "#{c} degrees C\n"
 else
   abort "Must specify C or F."
 end
 
-if f.nil?
-  print "#{c} degrees C\n"
-else
-  print "#{f} degrees F\n"
-end
+
