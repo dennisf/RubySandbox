@@ -1,6 +1,5 @@
 #! /bin/env ruby
 
-
 require "rb-inotify"
 
 puts "Notify Example"
