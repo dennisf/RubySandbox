@@ -2,22 +2,19 @@
 
 
 runThread = Thread.new do
-  0.upto(8) do |y|
+  0.upto(10) do |y|
     puts "Sleeping #{y}"
-    sleep(1)
+    sleep(2)
   end
 end
 
 countThread = Thread.new do
-  0.upto(4) do |x|
-    puts x
+  0.upto(20) do |x|
+    puts "Quick sleep #{x}"
     sleep(1)
   end
 end
 
-while runThread.alive? do 
-  puts "Waiting"
-  sleep(1);
-end
+countThread.join
 
 
