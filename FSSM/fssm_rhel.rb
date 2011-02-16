@@ -1,4 +1,4 @@
-#! /usr/bin/env ruby 
+#! /bin/env ruby 
 
 require 'fssm'
 
@@ -8,7 +8,7 @@ puts "FSSM Example"
 monitor = FSSM::Monitor.new
 
 
-monitor.path '/Volumes/Media/watch_dir' do
+monitor.path '/scr/ctm/dennisf/watch_dir' do
 
   update do |base,relative|
     puts "update: #{base}  #{relative}"
