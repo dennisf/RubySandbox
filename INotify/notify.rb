@@ -2,6 +2,7 @@
 
 require "rb-inotify"
 
+puts "Ruby Version: #{RUBY_VERSION}"
 puts "Notify Example"
 
 processThread = Thread.new do
@@ -12,12 +13,18 @@ processThread = Thread.new do
     puts "name: #{event.absolute_name} event: #{event.flags}"
   end
 
-  notifier.run
+  while true do
+    # Wait 5 seconds for an event then give up
+    puts "process loop about to select"
+    if IO.select([notifier.to_io], [], [], 5)
+      notifier.process
+    end
+  end
 
 end
 
-0.upto(4) do |x|
-  puts x
+0.upto(120) do |x|
+  puts "main loop at #{x}"
   sleep(1)
 end
 
