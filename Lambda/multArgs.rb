@@ -5,7 +5,9 @@ puts "Lamda Example with mutliply arguments"
 
 put_message = lambda {|x| puts "The number is #{x}"}
 
-put_plus_one = lambda {|x| puts "The number plus one is #{x + 1}"}
+put_plus_one = lambda do |x| 
+  puts "The number plus one is #{x + 1}"
+end
 
 def showNumbers(*numbers,&showProc)
   numbers.each do |n|
