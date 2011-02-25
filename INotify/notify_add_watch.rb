@@ -1,12 +1,9 @@
 #! /bin/env ruby
 
 require "rb-inotify"
-require "tread"
 
 puts "Ruby Version: #{RUBY_VERSION}"
 puts "Notify Example"
-
-notifierLock = Mutex.new
 
 addPathQueue = Queue.new
 
@@ -24,14 +21,26 @@ notifierThread = Thread.new do
       notifier.process
     end
 
+    puts "Checking for new paths"
+
     until addPathQueue.empty? do
       newPath = addPathQueue.pop
-      notifier.watch("/scr/ctm/dennisf/watch_dir", :access, :create, :moved_to, :delete, :moved_from, :recursive, &event_proc) 
+      puts "Adding watch for #{newPath} \n"
+      notifier.watch(newPath, :access, :create, :moved_to, :delete, :moved_from, :recursive, &event_proc) 
     end
 
   end
 
 end
+
+
+sleep 12
+
+addPathQueue.push "/scr/ctm/dennisf/watch_dir1"
+
+sleep 10
+
+addPathQueue.push "/scr/ctm/dennisf/watch_dir2"
 
 notifierThread.join
 
