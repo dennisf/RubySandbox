@@ -22,7 +22,7 @@ end
 
 dir = "/scr/ctm/dennisf/watch_dir1/subdir1/file01"
 
-puts dir
+puts "\nsource path: #{dir}"
 
 (0..6).each do |splitIndex| 
   parts =  split_path(dir,splitIndex)
@@ -31,6 +31,7 @@ puts dir
   if parts[0].nil?
     puts "  0 : nil"
     puts "  1 : #{parts[1]}"
+    break
   else
     puts "  0 : #{parts[0]}"
     puts "  1 : #{parts[1]}"
