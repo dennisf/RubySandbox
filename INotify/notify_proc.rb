@@ -9,8 +9,10 @@ event_proc = lambda do |event|
 
   flags = event.flags
 
-  if flags.include? :is_dir
-    flags.delete :is_dir
+  puts "#{event.absolute_name}   #{event.flags}"
+
+  if flags.include? :isdir
+    #flags.delete :isdir
     puts "directory event: #{flags} path:#{event.absolute_name}"
   else
     puts "file event: #{flags}  name: #{event.absolute_name}"
