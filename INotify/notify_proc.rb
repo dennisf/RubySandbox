@@ -9,13 +9,10 @@ event_proc = lambda do |event|
 
   flags = event.flags
 
-  puts "#{event.absolute_name}   #{event.flags}"
-
-  if flags.include? :isdir
-    #flags.delete :isdir
-    puts "directory event: #{flags} path:#{event.absolute_name}"
-  else
+  if !flags.include? :isdir
     puts "file event: #{flags}  name: #{event.absolute_name}"
+  else
+    puts "directory event: #{flags} path:#{event.absolute_name}"
   end
 
 end
@@ -24,8 +21,7 @@ processThread = Thread.new do
 
   notifier = INotify::Notifier.new
 
-  notifier.watch("/scr/ctm/dennisf/watch_dir1",  :create, :moved_to, :delete, :moved_from, :recursive, &event_proc) 
-  notifier.watch("/scr/ctm/dennisf/watch_dir2",  :create, :moved_to, :delete, :moved_from, :recursive, &event_proc) 
+  notifier.watch("/scr/ctm/dennisf/watch_dir1",  :create, :moved_to, :delete, :close_write,  :recursive, &event_proc) 
 
   while true do
     # Wait 5 seconds for an event then give up
