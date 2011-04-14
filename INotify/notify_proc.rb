@@ -10,9 +10,9 @@ event_proc = lambda do |event|
   flags = event.flags
 
   if !flags.include? :isdir
-    puts "file event: #{flags}  name: #{event.absolute_name}"
+    puts "   #{Time.now} file event: #{flags}  name: #{event.absolute_name}"
   else
-    puts "directory event: #{flags} path:#{event.absolute_name}"
+    puts "   #{Time.now} directory event: #{flags} path:#{event.absolute_name}"
   end
 
 end
@@ -25,6 +25,7 @@ processThread = Thread.new do
 
   while true do
     # Wait 5 seconds for an event then give up
+    puts "Entering wait at #{Time.now}"
     if IO.select([notifier.to_io], [], [], 5)
       notifier.process
     end
