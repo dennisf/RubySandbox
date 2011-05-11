@@ -1,7 +1,7 @@
 #! /usr/bin/env ruby
 
 
-require 'drb'
+require 'drb/drb'
 require 'time'
 
 remoteObject = DRbObject.new nil, 'druby://keemun.eol.ucar.edu:8787'

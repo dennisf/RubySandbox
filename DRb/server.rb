@@ -1,6 +1,6 @@
 #! /usr/bin/env ruby
 
-require 'drb'
+require 'drb/drb'
 
 class RemoteFileEvent
 
