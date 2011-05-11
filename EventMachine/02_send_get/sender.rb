@@ -23,7 +23,7 @@ module EventTalker
 end
 
 EventMachine::run do
-  host,port = "0.0.0.0",8090
+  host,port = "keemun.eol.ucar.edu",8090
   EventMachine::connect host,port,EventTalker
 end
 
