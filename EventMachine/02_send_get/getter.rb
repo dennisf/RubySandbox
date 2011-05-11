@@ -22,7 +22,7 @@ module EventListener
 end
 
 EventMachine::run do
-  host,port = "0.0.0.0",8090
+  host,port = "keemun.eol.ucar.edu",8090
   EventMachine::start_server host,port,EventListener
   puts "Called start_server"
 end
