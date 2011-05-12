@@ -2,21 +2,24 @@
 
 require 'eventmachine'
 require 'time'
+require 'socket'
 
 module EventListener
 
 
   def post_init
-    puts "Connection created"
+    @peer_port, @peer_ip = Socket::unpack_sockaddr_in get_peername
+    peer_info = Socket::getnameinfo get_peername
+    @peer_host = peer_info[0]
+    puts "Connection created from #{@peer_host}"
   end
 
   def receive_data data
-    puts "Received: #{data}"
+    puts "Received(#{@peer_host}): #{data}"
   end
 
   def unbind
-    puts "Connection terminated"
-
+    puts "Connection terminated from #{@peer_host}"
   end
 
 end
