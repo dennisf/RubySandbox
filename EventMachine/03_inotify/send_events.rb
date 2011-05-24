@@ -10,9 +10,22 @@ def exit_loop
 end
 
 module EventTalker 
+
+  include EM::P::ObjectProtocol
+
   def post_init
     puts "Connection established"
+  end
 
+
+  def receive_object(data)
+    puts "received_object: #{data}"
+
+    @receive_callback.call data
+  end
+
+  def set_message_callback(callback)
+    @receive_callback = callback
   end
 
   def unbind
@@ -21,43 +34,29 @@ module EventTalker
   end
 end
 
-module EventWatcher 
-  def post_init
-    puts "EventWatcher Created"
+module EventHandler
+  
+  def initialize(watcher,talker)
+    @notifier = watcher
+    @remote = talker
 
+    @remote.set_message_callback method(:process_remote_message)
+  end
+
+  def post_init
+    puts "EventHandler Created"
   end
 
   def unbind
-    puts "EventWatcher unbind"
+    puts "EventHandler unbind"
   end
 
   def notify_readable
-    puts "notify_readable called \n"
-
     @notifier.process
   end
 
-  # def receive_data data
-
-  #   puts "Data is #{data.class}"
-    
-  #   puts "(EventWatcher) recieved data:  #{data}"
-    
-  #   @notifier.process
-
-  # end
-
-  def set_remote(connection)
-    @remote = connection
-  end
-
-  def set_notifier(watcher)
-    @notifier = watcher
-  end
-
   def add_watch(path)
-    puts "Adding watch path #{path}"
-    @notifier.watch(path,:create, :moved_to, :delete, :close_write,  :recursive, &method(:process_event)) 
+
   end
 
   def process_event(event)
@@ -72,6 +71,20 @@ module EventWatcher
     @remote.send_data message
   end
 
+  def process_remote_message(command_hash)
+
+    if command_hash[:request] == "add"
+      path = command_hash[:path]
+      puts "Adding watch path #{path}"
+      @notifier.watch(path,:create, :moved_to, :delete, :close_write,  :recursive, &method(:process_event))       
+    end
+
+    if command_hash[:request] == "terminate"
+      @remote.detach
+    end
+
+  end
+
 end
 
 
@@ -82,20 +95,10 @@ EventMachine::run do
   talker   = EventMachine::connect host,port,EventTalker
 
   notifier = INotify::Notifier.new
-#  notifier.watch("/scr/ctm/dennisf/watch_dir1",:create, :moved_to, :delete, :close_write,  :recursive, &method(:process_event_call)) 
 
-  # catcher  = EventMachine::watch notifier.to_io, EventWatcher do 
-  #   notifier.process
-  # end
-
-  catcher = EventMachine.watch notifier.to_io,EventWatcher
+  catcher = EventMachine.watch notifier.to_io,EventHandler,notifier,talker
   catcher.notify_readable = true
 
-  puts "about to set catcher params"
-
-  catcher.set_remote talker
-  catcher.set_notifier notifier
-  catcher.add_watch "/scr/ctm/dennisf/watch_dir1"
 end
 
 puts "bye"
