@@ -14,6 +14,7 @@ module EventListener
     @peer_host = peer_info[0]
     puts "Connection created from #{@peer_host}"
 
+    puts "Asking #{@peer_host} to watch /scr/ctm/dennisf/watch_dir1"
     send_object({:request => "add",:path =>"/scr/ctm/dennisf/watch_dir1"})
 
     EventMachine::add_timer 15,method(:send_terminate)
