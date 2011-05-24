@@ -6,7 +6,6 @@ require 'socket'
 
 module EventListener
 
-
   def post_init
     @peer_port, @peer_ip = Socket::unpack_sockaddr_in get_peername
     peer_info = Socket::getnameinfo get_peername
