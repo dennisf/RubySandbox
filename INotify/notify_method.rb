@@ -21,7 +21,7 @@ processThread = Thread.new do
 
   notifier = INotify::Notifier.new
 
-  notifier.watch("/scr/ctm/dennisf/watch_dir1",  :create, :moved_to, :delete, :close_write,  :recursive, &method(:process_event)) 
+  notifier.watch("/scr/ctm/dennisf/watch_dir1",:create, :moved_to, :delete, :close_write,  :recursive, &method(:process_event)) 
 
   while true do
     # Wait 5 seconds for an event then give up
