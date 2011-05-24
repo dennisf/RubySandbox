@@ -55,9 +55,6 @@ module EventHandler
     @notifier.process
   end
 
-  def add_watch(path)
-
-  end
 
   def process_event(event)
     flags = event.flags
