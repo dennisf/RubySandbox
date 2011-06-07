@@ -20,6 +20,7 @@ puts "Callback every 2 seconds for 10 seconds"
 EventMachine::run do
   EventMachine::add_periodic_timer(2,event_callback)
   EventMachine::add_timer(10,stop_callback)
+  puts "All callbacks set"
 end
 
 puts "bye"
