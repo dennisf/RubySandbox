@@ -1,0 +1,80 @@
+
+collect_event.rb
+----------------
+
+Event Loop:
+
+1) Listen to port 8090 for connections.
+
+
+For Each Connection made:
+1) Create a Connection object with an EventListner module "mix-in" when a 
+send_events.rb makes a connection
+
+2) In the post_init:
+
+2a) Get the name of the host where send_events.rb is running.  Print the host name.
+
+2b) Tell send_events.rb to watch a directory.
+
+2c) Set up a timer to run send_terminate in 15 secondds
+
+3) In receive_data print out the strings sent by send_events.rb
+
+4) 15 seconds after the connection from send_events was made the send_terminate
+method will be called. This sends a request to send_events to terminate.
+
+5) When the connection is broken from the send_events.rb the unbind method is
+called.  This just prints out message that connection has been terminated.
+
+
+send_events.rb
+--------------
+
+Event Loop:
+1) Make a conection to the host where collect_events.rb is running on port 8090.
+This will create a Connection object with EventTalker module mix-in.
+
+2) Create a INotify object
+
+3) Create a Connection object with an EventHandler module mix-in using the 
+EventMachine::watch method. The watch call is sent the inotify io object, the 
+EventHandler module  and the arguments for the EventHandler initialize method.
+
+
+Connection Object with EventHandler mix-in
+
+1) The initialize method takes two arguments a inotify object and a connection object.
+1a) It save references to both arguments as instence variables to be used by other methods.  
+1b) The connection object will have a EventTalker mix-in.  The set_message_callback is
+used to have the EventTalker object call the EventHandler method process_remote_message every
+time The EventTalker receives messages from collect_events.rb
+
+2) The process_remote_message processs hash objects sent by collect_events.rb.  
+2a) If the hash contains :request => "add" it will also contain a :path value containaing a 
+directory path. Use the :path value to set a watch by the inotify object.
+2b) If the hash contains :request => "terminate" then call detach on the object connnected
+to collect_events.rb
+
+3) This object is watching the IO object of inotify object.  When there is something to be 
+read on the IO object the notify_readable is called. The process call to the inotify object
+is the read in this case.
+
+4) The process_event is used as a callback by the inotify object to process events that it sees in
+the directory (or directories) it is watching.  It prints a message and then also sends that message
+to collect_events.rb.
+
+
+Connection object with EventTalker mix-in
+1) Every an object is received from collect_events recieve_object is called.  That object from
+collect_events.rb is assume to a hash containing a :request key.  That hash is passed on to the
+EventHandler use a callback that it sent.
+
+2) After a connect has been broken with collect_events, in this case by a detach call by 
+EventHandler, the unbind method will be called.  It sets a timer to shutdown the event loop in 
+3 seconds.
+ 
+
+
+
+
