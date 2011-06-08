@@ -1,0 +1,12 @@
+
+task :default => 'hello'
+
+desc "Prints out Hello Rake"
+task :hello do
+     puts "Hello Rake"
+end
+
+
+
+
+
