@@ -4,7 +4,7 @@ require 'yaml'
 
 puts "hello"
 
-food = YAML.load_file('food.yaml')
+food = YAML::load_file('food.yaml')
 
 if food.class == Hash 
   food.each do | key, value |
