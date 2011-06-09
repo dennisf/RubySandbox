@@ -1,0 +1,28 @@
+
+require 'rake/clean'
+
+new_files = ["01.file","02.file","03.file"]
+
+
+new_files.each do | new_file |
+  desc "Make #{new_file}"
+  file new_file do 
+    touch new_file
+  end
+end
+
+desc "Make all files"
+task :default => new_files
+
+CLOBBER.include new_files
+
+
+
+
+
+
+
+
+
+
+
