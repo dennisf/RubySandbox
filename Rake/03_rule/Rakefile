@@ -1,0 +1,32 @@
+
+#
+#  The Rakefile will also work with rake 04.file
+#
+require 'rake/clean'
+
+new_files = ["01.file","02.file","03.file"]
+
+#
+# The desc and file lines only needed to document
+# the new_file targets with rake -T
+#
+new_files.each do |new_file|
+  desc "Make #{new_file}"
+  file new_file
+end
+
+rule '.file' do |task|
+  touch task.name
+end
+
+desc "Make all files"
+task :default => new_files
+
+CLOBBER.include FileList['*.file']
+
+
+
+
+
+
+
