@@ -2,13 +2,30 @@
 
 require 'optparse'
 
-puts "hello"
-
-puts "bye"
-
 
 class ParseParameters
 
-def this.
+  def self.parseCommandLine
+
+    puts ARGV
+
+
+  end
 
 end
+
+
+begin
+
+  ParseParameters::parseCommandLine
+
+rescue Exception => boom
+
+  puts "Exception (go.rb): #{boom}"
+
+end
+
+
+
+
+
