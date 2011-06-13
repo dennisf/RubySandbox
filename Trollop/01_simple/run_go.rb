@@ -2,6 +2,7 @@
 
 commands = [];
 
+commands.push "./go.rb --help"
 commands.push "./go.rb"
 commands.push "./go.rb -c blue"
 commands.push "./go.rb --color blue"
