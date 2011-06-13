@@ -8,6 +8,7 @@ commands.push "./go.rb -c blue"
 commands.push "./go.rb --color blue"
 commands.push "./go.rb -c blue -l 8"
 commands.push "./go.rb -c 5"
+commands.push "./go.rb -c blue -t 23"
 
 puts ""
 
