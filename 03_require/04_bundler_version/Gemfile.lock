@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    trollop (1.16.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  trollop (= 1.16.1)
