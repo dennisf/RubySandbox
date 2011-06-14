@@ -2,10 +2,10 @@
 
 commands = [];
 
-commands.push "./go.rb -help"
+commands.push "./go.rb --help"
 commands.push "./go.rb"
-commands.push "./go.rb -c blue --count 4"
-commands.push "./go.rb -c blue -n 9"
+commands.push "./go.rb -c blue --number 4"
+commands.push "./go.rb -n 11"
 
 
 puts ""

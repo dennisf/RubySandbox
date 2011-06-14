@@ -8,10 +8,10 @@ begin
 
   options = Trollop::options do
     opt :color, "Set color",:default => "green"
-    opt :number, "Set count",:default => 5
+    opt :number, "Set count; must be from 1 to 10",:default => 5
   end
   
-  Trollop::die :number, "must be a number from 1 to 10" if options[:number] not [1..10]
+  Trollop::die :number, "must be a number from 1 to 10" if not (1..10).to_a.include? options[:number]
 
   pp options
 
