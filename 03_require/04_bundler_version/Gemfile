@@ -1,5 +1,5 @@
 source "http://rubygems.org"
 
 
-gem "trollop","1.16.1"
+gem "eventmachine","0.12.8"
 

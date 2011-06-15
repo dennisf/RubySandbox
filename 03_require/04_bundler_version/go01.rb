@@ -1,6 +1,10 @@
 #! /usr/bin/env ruby
 require 'pp'
-require 'trollop'
+require 'eventmachine'
 
-pp "Trollop version is "  + Gem.loaded_specs['trollop'].version.marshal_dump[0]
+pp "EventMahine version from Gem Spec "  + Gem.loaded_specs['eventmachine'].version.marshal_dump[0]
+
+pp "EventMachine version is: #{EventMachine::VERSION}"
+
+
 

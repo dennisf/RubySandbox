@@ -1,10 +1,10 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    trollop (1.16.1)
+    eventmachine (0.12.8)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  trollop (= 1.16.1)
+  eventmachine (= 0.12.8)
