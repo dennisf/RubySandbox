@@ -5,6 +5,7 @@
 require 'eventmachine'
 require 'rb-inotify'
 require 'time'
+require 'pp'
 
 module InotifyHandler
 
@@ -12,9 +13,10 @@ module InotifyHandler
     begin
       @inotifier = inotifier_instance
       @movers = Array.new
+      @paths = Array.new
+      @timer = nil
 
       watch_paths.each do | path |
-        puts "About to set watching #{path}"
         @inotifier.watch(path,:create,:moved_to,:recursive,&method(:handle_event))
         puts "watching #{path}"
       end
@@ -28,10 +30,51 @@ module InotifyHandler
     flags = event.flags
     if !flags.include? :isdir
       message =  "   #{Time.now} file event: #{flags}  name: #{event.absolute_name}"
+      @paths.push [Time.now,event.absolute_name]
+      if @timer.nil?
+        @timer = EventMachine::add_timer(5,method(:process_paths))
+      end
     else
       message =  "   #{Time.now} directory event: #{flags} path:#{event.absolute_name}"
     end
     puts message
+  end
+
+
+  def process_paths
+
+    puts "process paths"
+
+    @timer = nil
+
+    puts "number of movers: #{@movers.size}"
+    puts "size of paths :  #{@paths.size}"
+
+    @movers.each do | mover | 
+      break if @paths.empty?
+
+      if mover.available?
+        entry_time, path = @paths[0]
+        start_time = entry_time + 5
+
+        puts "start_time: #{start_time}"
+        puts "time now :#{Time.now}"
+        
+        if start_time < Time.now
+          break
+        end
+
+        puts "About to call start_move"
+        
+        mover.start_move(path)
+        @paths.shift
+      end
+    end
+
+    if @paths.size > 0 
+      @timer = EventMachine::add_timer(0.5,method(:process_paths))
+    end
+
   end
 
 
@@ -44,8 +87,6 @@ module InotifyHandler
     puts "Mover added"
   end
 
-
-
 end
 
 
@@ -55,17 +96,37 @@ module ConnectionHandler
 
   def post_init
     puts "Connection Made"
+    @available = false
+  end
+
+  def available?
+    @available
   end
 
   def receive_object(data)
     request = data[:request]
 
+    pp data
+
     case request
-      when "mover_pid"
+    when "mover_pid"
       @mover_pid = data[:pid]
       puts "Connected to mover with pid of #{@mover_pid}"
+      @available = true
+    when "done"
+      @available = true
+      puts "#{@mover_pid} is now available"
     end
+
+    pp @available
   end
+
+  def start_move(path)
+    puts "Request sent to #{@mover_pid} to move of #{path}"
+    send_object({:request=>"move",:path=>path})
+    @available = false
+  end
+
 end
 
 

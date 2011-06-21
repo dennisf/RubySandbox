@@ -13,9 +13,20 @@ module CommandHandler
     puts "#{Process.pid} : Connection Made"
 
     send_object({:request => "mover_pid",:pid => Process.pid})
-
   end
 
+
+  def receive_object(data)
+    request = data[:request]
+    
+    case request
+    when "move"
+      path = data[:path]
+      puts "move #{path}"
+      sleep 1
+      send_object({:request=>"done"})
+    end
+  end
 
 end
 
