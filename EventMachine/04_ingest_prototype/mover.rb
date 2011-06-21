@@ -23,7 +23,7 @@ module CommandHandler
     when "move"
       path = data[:path]
       puts "move #{path}"
-      sleep 1
+      sleep 1.0
       send_object({:request=>"done"})
     end
   end

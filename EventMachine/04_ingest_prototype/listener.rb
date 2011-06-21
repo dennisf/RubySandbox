@@ -47,7 +47,6 @@ module InotifyHandler
 
     @timer = nil
 
-    puts "number of movers: #{@movers.size}"
     puts "size of paths :  #{@paths.size}"
 
     @movers.each do | mover | 
@@ -56,16 +55,11 @@ module InotifyHandler
       if mover.available?
         entry_time, path = @paths[0]
         start_time = entry_time + 5
-
-        puts "start_time: #{start_time}"
-        puts "time now :#{Time.now}"
         
-        if start_time < Time.now
+        if start_time > Time.now
           break
         end
 
-        puts "About to call start_move"
-        
         mover.start_move(path)
         @paths.shift
       end
@@ -106,8 +100,6 @@ module ConnectionHandler
   def receive_object(data)
     request = data[:request]
 
-    pp data
-
     case request
     when "mover_pid"
       @mover_pid = data[:pid]
@@ -118,7 +110,6 @@ module ConnectionHandler
       puts "#{@mover_pid} is now available"
     end
 
-    pp @available
   end
 
   def start_move(path)
