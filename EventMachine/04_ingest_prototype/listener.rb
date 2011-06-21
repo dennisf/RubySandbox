@@ -67,6 +67,7 @@ module InotifyHandler
 
     if @paths.size > 0 
       @timer = EventMachine::add_timer(0.5,method(:process_paths))
+#      EventMachine::next_tick method(:process_paths)
     end
 
   end
@@ -108,6 +109,8 @@ module ConnectionHandler
     when "done"
       @available = true
       puts "#{@mover_pid} is now available"
+    when "ping_to"
+      send_object({:request=>"ping_back"})
     end
 
   end
@@ -134,9 +137,13 @@ EventMachine::run do
 
   host,port = "0.0.0.0",8090
   EventMachine::start_server host,port,ConnectionHandler do |connection|
-
     inotifier_handler.add_mover connection
+  end
 
+  mover_command = './mover.rb'
+  5.times do 
+    pid = Process.spawn mover_command
+    puts "Spawning mover.rb with pid of #{pid}"
   end
 
 end

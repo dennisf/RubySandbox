@@ -13,6 +13,7 @@ module CommandHandler
     puts "#{Process.pid} : Connection Made"
 
     send_object({:request => "mover_pid",:pid => Process.pid})
+
   end
 
 
@@ -23,9 +24,15 @@ module CommandHandler
     when "move"
       path = data[:path]
       puts "move #{path}"
-      sleep 1.0
+      sleep 1.1
       send_object({:request=>"done"})
     end
+  end
+
+
+  def unbind
+    puts "#{Process.pid} : Connection Unbind"
+    EventMachine::stop_event_loop
   end
 
 end
