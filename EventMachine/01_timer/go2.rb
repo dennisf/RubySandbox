@@ -7,7 +7,7 @@ startTime = Time.now
 
 event_callback = lambda do 
   timeGap = Time.now - startTime
-  puts "Callback at #{timeGap.floor} seconds."
+  puts "Callback at #{timeGap} seconds."
   EventMachine::stop_event_loop
 end
 
