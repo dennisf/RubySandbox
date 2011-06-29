@@ -88,7 +88,7 @@ end
 
 
 EventMachine::run do
-  host,port = "keemun.eol.ucar.edu",8090
+  host,port = "sake.eol.ucar.edu",8090
   talker   = EventMachine::connect host,port,EventTalker
 
   notifier = INotify::Notifier.new

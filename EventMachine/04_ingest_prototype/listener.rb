@@ -50,7 +50,7 @@ module InotifyHandler
     @movers.push mover_connection
     puts "Mover added"
   end
-end
+end 
 
 
 module ConnectionHandler

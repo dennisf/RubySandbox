@@ -22,7 +22,7 @@ EOS
   pp options
 
 rescue SystemExit
-  # Don't do anything here.
+  puts "SystemExit was raised"
 rescue Exception => boom
   puts "Exception class: #{boom.class}"
   puts "Exception (go.rb): #{boom}"
