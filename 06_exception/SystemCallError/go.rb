@@ -1,6 +1,22 @@
 #! /usr/bin/env ruby
 
-puts "hello"
+require "fileutils"
 
 
-puts "bye"
+begin
+
+  FileUtils::cp("no_file.any","nowhere.any")
+
+rescue Errno::ENOENT => missing
+  puts "File does not exist"
+  puts "class: #{missing.class}"
+  puts "message: #{missing}"
+rescue Exception => boom
+  puts "Exception rescue"
+  puts "class: #{boom.class}"
+  puts "message: #{boom}"
+end
+
+
+
+
