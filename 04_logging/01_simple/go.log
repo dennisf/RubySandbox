@@ -1,0 +1,5 @@
+# Logfile created on 2011-06-29 12:32:49 -0600 by logger.rb/25413
+E, [2011-06-29T12:32:49.445614 #2772] ERROR -- : A error message.
+W, [2011-06-29T12:32:49.445665 #2772]  WARN -- : A warning message.
+E, [2011-06-29T12:33:33.157059 #2783] ERROR -- : A error message.
+W, [2011-06-29T12:33:33.157198 #2783]  WARN -- : A warning message.
