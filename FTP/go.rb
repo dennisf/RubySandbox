@@ -16,6 +16,10 @@ begin
 
   ftp_connection.putbinaryfile('small.file')
 
+  ftp_connection.putbinaryfile('large.jpg') do |data|
+    puts "Sending #{data.length}"
+  end
+
   ftp_connection.close()
   
 rescue Exception => boom
