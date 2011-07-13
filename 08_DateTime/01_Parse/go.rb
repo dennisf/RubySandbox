@@ -10,7 +10,14 @@ def parse_date(date_string)
   date_object = Time::parse(date_string)
 
   puts "Date Object local: #{date_object}"
+  puts "Date Hour: #{date_object.hour}"
+  puts
+
   puts "Date Object utc: #{date_object.utc}"
+  puts "Date Hour: #{date_object.hour}"
+
+  puts
+  puts "----------------------------------------"
   puts
 
 end
