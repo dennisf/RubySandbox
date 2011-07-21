@@ -8,7 +8,7 @@ def do_ping(host)
   begin
     puts ""
     puts "pinging #{host}"
-    pinger = Net::Ping::TCP.new('host',80,5)
+    pinger = Net::Ping::TCP.new(host,80,5)
     if pinger.ping 
       puts "ping successful, duration: #{pinger.duration}"      
     else
@@ -23,7 +23,5 @@ end
 
 do_ping('sferic.eol.ucar.edu')
 do_ping('sferics.eol.ucar.edu')
-
-
 
 
