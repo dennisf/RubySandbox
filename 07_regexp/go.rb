@@ -21,6 +21,13 @@ run_match(a_line,"Cats")
 run_match(a_line,"Dogs")
 run_match(a_line,"Mice")
 
+a_file = "radar.NEXRAD.201106141151.DYX_Reflectivity.gif"
+run_match(a_file,"Reflectivity")
+run_match(a_file,"Velocity")
+run_match(a_file,'[5][0-9]\...._Reflectivity')
 
+a_file = "radar.NEXRAD.20110
+6141141.DYX_Reflectivity.gif"
+run_match(a_file,'[5][0-9]\...._Reflectivity')
 
 
