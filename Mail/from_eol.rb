@@ -6,7 +6,7 @@ require 'mail'
 Mail.defaults do
   delivery_method :smtp, 
   { :address              => "smtp.eol.ucar.edu",
-    :port                 => 25
+    :port                 => 25,
     :domain               => 'eol.ucar.edu',
     :user_name            => nil,
     :password             => nil,
@@ -15,7 +15,7 @@ Mail.defaults do
 end
 
 Mail.deliver do
-  to 'dennisf@ucar.edu'
+  to 'dennisf@ucar.edu,flanigan@fluth.net'
   from 'mail_test@ucar.edu'
   subject 'ruby mail gem test'
   body "test mail at #{Time.now()}"
