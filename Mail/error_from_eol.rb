@@ -14,8 +14,10 @@ def send_email(subject_line,message)
       :enable_starttls_auto => true  }
   end
 
+  send_to = "dennisf@ucar.edu"
+
   Mail.deliver do
-    to 'dennisf@ucar.edu'
+    to send_to
     from 'mail_test@ucar.edu'
     subject subject_line
     body message
