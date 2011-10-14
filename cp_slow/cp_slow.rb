@@ -14,14 +14,25 @@ begin
 
   puts "copy from #{from_path} to #{to_path}"
 
+  end_of_file = false
   from_file = File.open(from_path,"r")
-  to_file   = File.open(to_path,"a")
-  
-  while block = from_file.read(1024)
-    to_file.write(block)
-    printf(".")
+
+  until end_of_file
+    to_file   = File.open(to_path,"a")
+    block_count = 0
+    until  (block_count >= 80) or end_of_file
+      if block = from_file.read(1024)
+        to_file.write(block)
+        printf(".")
+        block_count += 1
+      else
+        end_of_file = true
+      end
+    end
+    to_file.close()
+    printf("C\n")
+    sleep(2) unless end_of_file
   end
-  printf("\n")
 
 rescue Exception => boom
   puts("")
