@@ -13,13 +13,14 @@ begin
 
   db_config = {:adapter => "sqlite3", :database => "events.db" };
 
-  ActiveRecord::Base.establish_connection(db_config)
+  ActiveRecord::Base::default_timezone = :utc
+  ActiveRecord::Base::establish_connection(db_config)
 
   ActiveRecord::Schema.define do
     create_table :events do | table |
       table.string   :observation, :null => false
       table.integer  :grade,       :default => 1
-      table.string   :temperature  :null => false
+      table.string   :temperature, :null => false
       table.timestamps
     end
   end
