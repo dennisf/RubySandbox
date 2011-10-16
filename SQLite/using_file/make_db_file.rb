@@ -18,9 +18,9 @@ begin
 
   ActiveRecord::Schema.define do
     create_table :events do | table |
-      table.string   :observation, :null => false
-      table.integer  :grade,       :default => 1
-      table.string   :temperature, :null => false
+      table.string  :observation, :null => false
+      table.string  :location,    :null => false
+      table.integer :temperature, :null => false
       table.timestamps
     end
   end
