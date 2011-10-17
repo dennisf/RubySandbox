@@ -5,12 +5,14 @@ require 'bundler/setup'
 require 'active_record'
 require 'sqlite3'
 
+$DEBUG = true
+
 ########################################
 #
 #
 #
 ########################################
-class Events < ActiveRecord::Base
+class FileEvent < ActiveRecord::Base
 
   def self.events_by_temperature
     order("temperature")
@@ -39,7 +41,7 @@ class EventsDatabase
         
   def self.create_database()
     ActiveRecord::Schema.define do
-      create_table :events do | table |
+      create_table :file_events do | table |
         table.string  :observation, :null => false
         table.string  :location,    :null => false
         table.integer :temperature, :null => false
@@ -52,15 +54,15 @@ class EventsDatabase
   def self.create_events()
 
     @@EVENT_DATA.each do |event_data|
-      Events.create(:observation => event_data[0],
-                    :location    => event_data[1],
-                    :temperature => event_data[2])
+      FileEvent.create(:observation => event_data[0],
+                       :location    => event_data[1],
+                       :temperature => event_data[2])
     end
   end
 
 
   def self.list_by_temperature()
-    event_list = Events.events_by_temperature()
+    event_list = FileEvent.events_by_temperature()
     event_list.each do | event |
       printf("%8s %3s %3d\n",event.observation,event.location,event.temperature)
     end
@@ -86,6 +88,17 @@ begin
   EventsDatabase::create_database()
   EventsDatabase::create_events()
   EventsDatabase::list_by_temperature()
+
+  puts "rain: "
+  if rain_events = FileEvent.find_all_by_observation("rain")
+
+    puts "rain_events: #{rain_events.class()}"
+    rain_events.each do | rain |
+      puts "#{rain.observation()}, #{rain.temperature()}, #{rain.location()}"
+    end
+  else
+    put "No rain events"
+  end
 
 rescue Exception => boom
   puts "Exception : #{boom.class()}"
