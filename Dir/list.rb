@@ -1,4 +1,4 @@
-#! /bin/env ruby
+#! /usr/bin/env ruby
 
 dir_name = "/scr/ctm/dennisf/watch_dir1"
 
