@@ -15,7 +15,7 @@ rice :
   - wild
 
 aisles :
-  - number : onen
+  - number : one
     food   : fruit
   - number : two
     food   : meat
