@@ -20,6 +20,8 @@ a_line = "Cats and Dogs"
 run_match(a_line,"Cats")
 run_match(a_line,"Dogs")
 run_match(a_line,"Mice")
+run_match(a_line,"^Cats")
+run_match(a_line,"Dogs$")
 
 a_file = "radar.NEXRAD.201106141151.DYX_Reflectivity.gif"
 run_match(a_file,"Reflectivity")
