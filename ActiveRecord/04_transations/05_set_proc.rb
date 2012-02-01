@@ -27,11 +27,20 @@ begin
 
   end
 
+  process_row = nil;
+
   Event.transaction do
     if event_row = Event.lock.where("status = ?","CLOSE").order("updated_at ASC").first
       event_row.status = "PROC"
       event_row.save()
     end
+    process_row = event_row
+  end
+
+  if process_row
+    puts "process_row id: #{process_row.id}"
+  else
+    puts "No rows to process."
   end
 
 rescue Exception => boom
