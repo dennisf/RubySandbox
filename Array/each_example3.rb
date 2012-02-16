@@ -21,6 +21,7 @@ process_array(3)
 process_array(3,nil)
 process_array()
 process_array(nil)
+process_array(nil,nil)
 
 
 
