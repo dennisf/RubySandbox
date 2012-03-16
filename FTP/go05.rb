@@ -9,16 +9,13 @@ begin
 
   ftp_connection.resume = true
 
-  ftp_connection.putbinaryfile('/dev/null','test.pdf') do | data |
-    puts "sending #{data.length}"
-  end
-
-  sleep 2
+#  ftp_connection.putbinaryfile('/dev/null','test.pdf') do | data |
+#    puts "sending #{data.length}"
+#  end
 
   ftp_connection.retrbinary("RETR " + 'test.pdf', 1, 4074184) { |data| puts "size of data: #{data.length}" }
 
-  ftp_connection.retrbinary("RETR " + 'test.pdf', 1, 4074184) {nil}
-
+#  ftp_connection.retrbinary("RETR " + 'test.pdf', 1, 4074184) {nil}
 
   ftp_connection.close()
   
