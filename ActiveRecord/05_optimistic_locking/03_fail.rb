@@ -1,5 +1,7 @@
 #! /usr/bin/env ruby
 
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
+
 #$DEBUG = true
 
 require 'active_record'
@@ -7,30 +9,17 @@ require 'pp'
 require 'logger'
 require 'time'
 
+require 'connect_db'
+require 'event'
+
 puts "hello"
 
 begin
 
-  dbconfig = {
-    :adapter  => "mysql2",
-    :host     => "localhost",
-    :username => "dennisf",
-    :password => "haha1201",
-    :database => "sandbox_dennisf"
-  }
+  connect_db()
 
-  ActiveSupport::LogSubscriber.colorize_logging = false
-  ActiveRecord::Base.logger = Logger.new(STDERR)
-  ActiveRecord::Base.establish_connection(dbconfig)
-
-  class Event < ActiveRecord::Base
-    def self.find_path_to_ingest()
-      file_event = where("status = ?","CLOSE").order("priority ASC").order("created_at DESC").first 
-    end
-  end
-  
-  row1 = Event.find_path_to_ingest()
-  row2 = Event.find_path_to_ingest()
+  row1 = Event.find(1)
+  row2 = Event.find(1)
 
   row1.status = "PROC"
   row1.save

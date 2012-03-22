@@ -1,5 +1,7 @@
 #! /usr/bin/env ruby
 
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
+
 #$DEBUG = true
 
 require 'active_record'
@@ -7,39 +9,14 @@ require 'pp'
 require 'logger'
 require 'time'
 
+require 'connect_db'
+require 'event'
+
 puts "hello"
 
 begin
 
-  dbconfig = {
-    :adapter  => "mysql2",
-    :host     => "localhost",
-    :username => "dennisf",
-    :password => "haha1201",
-    :database => "sandbox_dennisf"
-  }
-
-  ActiveSupport::LogSubscriber.colorize_logging = false
-  ActiveRecord::Base.logger = Logger.new(STDERR)
-  ActiveRecord::Base.establish_connection(dbconfig)
-
-  class Event < ActiveRecord::Base
-    def self.find_path_to_ingest()
-      begin
-        if file_event = where("status = ?","CLOSE").order("priority ASC").order("observe_time DESC").first 
-          file_event.status = "PROC"
-          sleep(rand(5.0))
-          file_event.save
-        end
-      rescue ActiveRecord::StaleObjectError => boom
-        puts "StaleObject: #{boom}"
-        retry
-      end
-
-      return file_event
-    end
-  end
-  
+  connect_db()
 
   10.times do  
     if event_row = Event.find_path_to_ingest()
@@ -48,7 +25,6 @@ begin
       break
     end
   end
-
 
 rescue Exception => boom
   puts "Exception class: #{boom.class}"

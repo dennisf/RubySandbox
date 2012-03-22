@@ -1,4 +1,5 @@
 #! /usr/bin/env ruby
+$LOAD_PATH.unshift File.expand_path(File.dirname(__FILE__))
 
 #$DEBUG = true
 
@@ -7,28 +8,16 @@ require 'pp'
 require 'logger'
 require 'time'
 
+require 'connect_db'
+require 'event'
+
 puts "hello"
 
 begin
 
-  dbconfig = {
-    :adapter  => "mysql2",
-    :host     => "localhost",
-    :username => "dennisf",
-    :password => "haha1201",
-    :database => "sandbox_dennisf"
-  }
-
-  ActiveSupport::LogSubscriber.colorize_logging = false
-  ActiveRecord::Base.logger = Logger.new(STDERR)
-  ActiveRecord::Base.establish_connection(dbconfig)
-
-  class Event < ActiveRecord::Base
-
-  end
+  connect_db()
 
   Event.delete_all
-
 
   start_time = Time.now()
 
