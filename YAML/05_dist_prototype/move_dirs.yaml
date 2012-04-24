@@ -1,0 +1,11 @@
+
+code_directories : /home/code
+move_directories :
+  /net/web/dc3_mc :
+  /export/ftp/dc3_monitor :
+      - .*kml$
+      - ^ops.radar.*jpg$
+      - ^reseach.gv.*
+    
+
+  
