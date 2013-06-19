@@ -1,0 +1,7 @@
+
+desc "Build and install gem examles"
+task :setup do
+  system("cd sand_num_1; gem build sand_num.gemspec; gem install *.gem")
+  system("cd sand_num_2; gem build sand_num.gemspec; gem install *.gem")
+  system("cd play_box; gem build play_box.gemspec; gem install *.gem")
+end
